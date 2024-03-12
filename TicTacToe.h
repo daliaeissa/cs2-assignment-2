@@ -25,6 +25,8 @@ class TicTacToe : public BoardGame
 
     void makeMove(int row, int column) override;
 
+    TicTacToe operator + ();
+
     bool checkRows();
 
     bool checkColumns();

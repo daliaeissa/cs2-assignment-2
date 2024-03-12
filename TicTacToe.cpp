@@ -29,6 +29,9 @@ void TicTacToe::makeMove(int row, int column)
     // }
 };
 
+TicTacToe TicTacToe:: operator +()
+{};
+
 void TicTacToe::print()
 {
     BoardGame::printBoard();
