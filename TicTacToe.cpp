@@ -95,7 +95,7 @@ bool TicTacToe::checkWin()
 
 void TicTacToe::isGameOver()
 {
-    //bool gameover = false;
+    //bool gameover = false;s
     if ((checkWin() == false) || (isBoardFull() == true)) 
     {
         cout << "IT'S A DRAW! GAMEOVER!" << endl;
