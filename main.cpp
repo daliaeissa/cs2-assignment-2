@@ -73,7 +73,7 @@ class Player
         Player();
         Player(string name, char symbol);
         
-        Player operator << (Player &player);
+        friend ostream &operator << (ostream &info, const Player &player);
 
         string get_name();
         char get_symbol();
@@ -83,12 +83,10 @@ class Player
 Player::Player(string name, char symbol) : playerName(name), playerSymbol(symbol)
 {};
 
-Player Player::operator<<(Player &player)
+ostream &operator << (ostream &info, const Player &player)
 {
-    ofstream playerInfo;
-    playerInfo << player.get_name() << endl;
-    playerInfo << player.get_symbol() << endl;
-    //return playerInfo;
+    info << player.playerName << player.playerSymbol <<endl;
+    return info;
 };
 
 string Player::get_name(){return playerName;};
@@ -588,16 +586,18 @@ bool ConnectFour::checkDiagonals()
     //if the row and column index are the same 
     for (int i = 0; i < rows - 3; i++)
     {
-        for (int j = 0; j < columns - 3; j--)
+        for (int j = 0; j < columns - 3; j++)
         {
             if ((play[i][j] != '\0') && (play[i][j] == play[i + 1][j + 1]) && (play[i][j] == play[i + 2][j + 2]) && (play[i][j] == play[i + 3][j + 3]))
             {
                 playerwon = play[i][j];
+                //cout << "Right diag" << i << " " << j << " " << playerwon << endl;
                 return true;
             }
             else if ((play[i][j + 3] != '\0') && (play[i][j + 3] == play[i + 1][j + 2]) && (play[i][j + 3] == play[i + 2][j + 1]) && (play[i][j + 3] == play[i + 3][j])) 
             {
                 playerwon = play[i][j + 3];
+                //cout << "left diag" << i << " " << j + 3 << " " << playerwon << endl;
                 return true;
             }
             //else {return false;}
@@ -664,6 +664,8 @@ int main()
     cout << "\n------------------------------------------------------------------------\n" << endl;
 
     ConnectFour connect4(6,7);
+    Player player1("khouly", 'X');
+    cout << player1;
     // connect4.makeMove(0);
     // connect4.makeMove(6);
     // connect4.makeMove(1);
