@@ -1,12 +1,11 @@
 #include "ConnectFour.h"
 #include <iostream>
 
-ConnectFour::ConnectFour(){};
-ConnectFour::ConnectFour(int r, int c)
+//ConnectFour::ConnectFour(){};
+ConnectFour::ConnectFour(int r, int c) : BoardGame(r,c)
 {
     r = 6; 
     r = 7;
-    BoardGame(r,c);
 };
 
 void ConnectFour::makeMove(int row, int column)

@@ -21,7 +21,7 @@ class ConnectFour : public BoardGame
     private:
 
     public:
-    ConnectFour(){}
+    //ConnectFour(){}
     ConnectFour(int r, int c) : BoardGame(6,7){}
 
     void makeMove(int row, int column) override;
