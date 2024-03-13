@@ -29,7 +29,7 @@ class BoardGame
     char currentPlayer = 'X';
 
     public:
-    BoardGame();
+    // BoardGame( int , int =0);
     BoardGame(int r, int c);
     
     void printBoard();
@@ -52,7 +52,7 @@ class BoardGame
 
     bool isBoardFull();
 
-    virtual void isGameOver();
+    virtual void isGameOver() = 0;
 
     //bool isGameOver();
 };

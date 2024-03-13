@@ -1,9 +1,9 @@
 #include "BoardGame.h"
 #include <iostream>
 
-BoardGame::BoardGame(){};
+//BoardGame::BoardGame(){};
 
-BoardGame::BoardGame(int r, int c): rows(r), columns(c)
+BoardGame::BoardGame(int r = 3, int c = 3): rows(r), columns(c)
 {
     // play = new char[rows*columns];
     // for (int i=0; i<<rows; i++)
@@ -77,14 +77,19 @@ void BoardGame::makeMove(int row, int column)
 
 bool BoardGame::isBoardFull()
 {
+    int countplays = 0;
     for (int i = 0; i < rows; i++)
     {
         for (int j = 0; j < columns; j++)
         {
-            if (play[i][j] != '\0') {return true;}
-            else {return false;}
+            if (play[i][j] != '\0')
+            {
+                countplays++;
+            }
         }
     }
+    if (countplays == rows*columns) {return true;}
+    else {return false;}
 };
 
 // bool BoardGame::isGameOver()

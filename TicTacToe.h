@@ -20,7 +20,7 @@ class TicTacToe : public BoardGame
     private:
 
     public:
-    TicTacToe();
+    //TicTacToe();
     TicTacToe(int r, int c);
 
     void makeMove(int row, int column) override;
@@ -37,7 +37,7 @@ class TicTacToe : public BoardGame
 
     //bool checkDraw();
 
-    void isGameOver() override;
+    virtual void isGameOver();
 
     void print();
 };
