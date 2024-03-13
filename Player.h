@@ -22,8 +22,15 @@ class Player
         char playerSymbol;
 
     public:
+        Player();
         Player(string name, char symbol);
-        Player(string);
+        
+        Player operator << (Player &player);
+
+        string get_name(){return playerName;}
+        char get_symbol(){return playerSymbol;}
+
+
 
 };
 

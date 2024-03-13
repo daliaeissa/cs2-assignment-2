@@ -8,3 +8,9 @@ Player::Player(string name, char symbol)
     playerSymbol = symbol;
 };
 
+Player Player::operator<<(Player &player)
+{
+    ostream playerInfo;
+    playerInfo << player.get_name() << endl;
+    playerInfo << player.get_symbol() << endl;
+};
