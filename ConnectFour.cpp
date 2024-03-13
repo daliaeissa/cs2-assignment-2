@@ -19,3 +19,7 @@ void ConnectFour::makeMove(int row, int column)
     else {cout << "Invalid move! Try again!" << endl;}
 };
 
+void ConnectFour::print()
+{
+    BoardGame::printBoard();
+};
