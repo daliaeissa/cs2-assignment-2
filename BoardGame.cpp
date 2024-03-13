@@ -68,20 +68,24 @@ void BoardGame::makeMove(int row, int column)
 // BoardGame BoardGame::operator + (BoardGame &move)
 // {
 //     //overloading plus operator
+//     BoardGame result;
+    
+//     int r = r + 1;
+//     int c = c + move;
 // }
 
 
-// bool BoardGame::isBoardFull()
-// {
-//     for (int i = 0; i < rows; i++)
-//     {
-//         for (int j = 0; j < columns; j++)
-//         {
-//             if (play[i][j] != '\0') {return true;}
-//             else {return false;}
-//         }
-//     }
-// };
+bool BoardGame::isBoardFull()
+{
+    for (int i = 0; i < rows; i++)
+    {
+        for (int j = 0; j < columns; j++)
+        {
+            if (play[i][j] != '\0') {return true;}
+            else {return false;}
+        }
+    }
+};
 
 // bool BoardGame::isGameOver()
 // {

@@ -3,10 +3,10 @@
 
 TicTacToe::TicTacToe() {};
 
-TicTacToe::TicTacToe(int r, int c)
+TicTacToe::TicTacToe(int r, int c) : BoardGame(r,c)
 {
     r = 3; c = 3;
-    BoardGame(r,c);
+    //BoardGame(r,c);
 //    r =5;
 //    c = 6;
 //    c += r;
@@ -14,12 +14,13 @@ TicTacToe::TicTacToe(int r, int c)
 
 void TicTacToe::makeMove(int row, int column)
 {
-    if (isMoveValid(row, column))
-    {
-        play[row][column] = currentPlayer;
-        switchPlayer();
-    }
-    else {cout << "Invalid move! Try again!" << endl;}
+    BoardGame::makeMove(row, column);
+    // if (isMoveValid(row, column))
+    // {
+    //     play[row][column] = currentPlayer;
+    //     switchPlayer();
+    // }
+    // else {cout << "Invalid move! Try again!" << endl;}
     // for (int i=0; i<rows; i++)
     // {
     //     for (int j=0; j<columns; j++)
@@ -29,8 +30,10 @@ void TicTacToe::makeMove(int row, int column)
     // }
 };
 
-TicTacToe TicTacToe:: operator +()
-{};
+// void TicTacToe:: operator +(int move_r, int move_c)
+// {
+
+// };
 
 void TicTacToe::print()
 {
@@ -83,6 +86,13 @@ bool TicTacToe::checkWin()
     else {return false;}
 };
 
+// bool TicTacToe::checkDraw()
+// {
+//     if (((currentPlayer == 'X') || (currentPlayer == 'O')) && (checkWin() == false))
+//     {return true;}
+//     else {return false;}
+// };
+
 void TicTacToe::isGameOver()
 {
     //bool gameover = false;
@@ -97,6 +107,7 @@ void TicTacToe::isGameOver()
         //gameover = false;
     }
 };
+
 
 int main()
 {

@@ -40,7 +40,7 @@ class BoardGame
 
     virtual void makeMove(int row, int column);
 
-    BoardGame operator + (BoardGame &move);
+    //BoardGame operator + (BoardGame &move);
 
     // bool checkRows();
 

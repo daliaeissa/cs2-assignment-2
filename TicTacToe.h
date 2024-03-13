@@ -25,7 +25,7 @@ class TicTacToe : public BoardGame
 
     void makeMove(int row, int column) override;
 
-    TicTacToe operator + ();
+    //void operator + (int move_r, int move_c);
 
     bool checkRows();
 
@@ -34,6 +34,8 @@ class TicTacToe : public BoardGame
     bool checkDiagonals();
 
     bool checkWin();
+
+    //bool checkDraw();
 
     void isGameOver() override;
 
