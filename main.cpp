@@ -18,6 +18,27 @@ and draw conditions*/
 #include<iostream>
 using namespace std;
 
+// Player class
+class Player
+{
+    private:
+        string playerName;
+        char playerSymbol;
+
+    public:
+        Player();
+        Player(string name, char symbol);
+        
+        Player operator << (Player &player);
+
+        string get_name(){return playerName;}
+        char get_symbol(){return playerSymbol;}
+
+
+
+};
+
+// BoardGame class
 class BoardGame 
 {
     protected:
@@ -133,6 +154,8 @@ bool BoardGame::isBoardFull()
     if (countplays == rows*columns) {return true;}
     else {return false;}
 };
+
+// TicTacToe class
 class TicTacToe : public BoardGame
 {
     private:
@@ -304,12 +327,14 @@ void TicTacToe::isGameOver()
     }
 };
 
+// ConnectFour class
 class ConnectFour : public BoardGame
 {
     private:
     char playerwon;
     int lastemptyrow = rows - 1;
     int i = 0;
+    int countcolumns = 0;
 
     public:
     ConnectFour();
@@ -346,18 +371,19 @@ ConnectFour::ConnectFour(int r, int c) : BoardGame(r,c)
 
 bool ConnectFour::isRowEmpty()
 {
-    // for (int i = lastemptyrow; i >= 0; i--)
-    // {
-    i = lastemptyrow;
+    for (int i = lastemptyrow; i >= 0; i--)
+    {
+    //i = lastemptyrow;
     for (int j = 0; j <= columns - 7; j++)
     {
         if ((play[i][j] == '\0') && (play[i][j + 1] == '\0') && (play[i][j + 2] == '\0') && (play[i][j + 3] == '\0') && (play[i][j + 4] == '\0') && (play[i][j + 5] == '\0') && (play[i][j + 6] == '\0'))
         {
-            lastemptyrow--;
             return true;
         }
     }
-    // }
+    //lastemptyrow--;
+    }
+    lastemptyrow--;
 };
 
 int ConnectFour::getEmptyRow()
@@ -367,15 +393,21 @@ void ConnectFour::makeMove(int column)
 {
     // for (int i = 0; i < rows; i++)
     // {
-    for (int j = 0; j < columns; j++)
-    {
+    // for (int j = 0; j < columns; j++)
+    // {
         if (isMoveValid(column))
         {
-            play[getEmptyRow()][column] = currentPlayer;
+            play[lastemptyrow][column] = currentPlayer;
             switchPlayer();
+            countcolumns++;
+            if (countcolumns == 7)
+            {
+                countcolumns = 0;
+                lastemptyrow--;
+            }
         }
         else {cout << "Invalid move! Try again!" << endl;}
-    }
+    //}
     // }
     // if (isMoveValid(column))
     // {
@@ -539,9 +571,12 @@ void ConnectFour::isGameOver()
     {
         cout << "IT'S A DRAW! GAMEOVER!" << endl;
     }
-    else if ( checkWin() == true)
+    else if ((checkWin() == false) && (BoardGame::isBoardFull() == false))
+    {cout << "The game is not over yet! Continue playing!" << endl;}
+    else if (checkWin() == true)
     {
-        cout << "Player " << playerwon << " WON! GAMEOVER!" << endl;
+        switchPlayer();
+        cout << "Player " << currentPlayer << " WON! GAMEOVER!" << endl;
     }
 };
 
@@ -562,12 +597,40 @@ int main()
     cout << "\n------------------------------------------------------------------------\n" << endl;
 
     ConnectFour connect4(6,7);
+    // connect4.makeMove(0);
+    // connect4.makeMove(6);
+    // connect4.makeMove(1);
+    // connect4.makeMove(5);
+    // connect4.makeMove(2);
+    // connect4.makeMove(4);
+    // connect4.makeMove(3);
+    connect4.makeMove(0);//
+    connect4.makeMove(1);
+    connect4.makeMove(2);
+    connect4.makeMove(3);
+    connect4.makeMove(4);
+    connect4.makeMove(5);
+    connect4.makeMove(6);
+    connect4.makeMove(1);//
+    connect4.makeMove(2);
+    connect4.makeMove(3);
+    connect4.makeMove(4);
+    connect4.makeMove(5);
+    connect4.makeMove(6);
     connect4.makeMove(0);
+    connect4.makeMove(2);//
+    connect4.makeMove(3);
+    connect4.makeMove(5);
+    connect4.makeMove(6);
+    connect4.makeMove(0);
+    connect4.makeMove(1);
+    connect4.makeMove(4);
+    connect4.makeMove(3);//
     connect4.makeMove(6);
     connect4.makeMove(1);
-    connect4.makeMove(5);
     connect4.makeMove(2);
     connect4.makeMove(4);
+    connect4.makeMove(5);
     connect4.makeMove(3);
 
     connect4.print();
