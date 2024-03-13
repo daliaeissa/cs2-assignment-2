@@ -1,4 +1,14 @@
-/*Part 1: Base Board Class (20 points)
+/*GameToGo is an online gaming startup that offers a collection of engaging and interactive board
+games for players of all ages. Their platform focuses on providing a virtual environment for
+playing classic board games like Tic-Tac-Toe and Connect Four. They emphasize user
+experience, fair play, and community engagement.
+In this assignment, you will play the role of a developer at GameBoardGo. You will design and
+implement two classic board games, Tic-Tac-Toe and Connect Four, within their online gaming
+platform. These games should be implemented using object-oriented principles such as
+inheritance and polymorphism. Additionally, you will utilize operator overloading in your
+implementations. Your mission is to create a seamless and enjoyable gaming experience for their
+users.
+Part 1: Base Board Class (20 points)
 - Create a base class called BoardGame which represents the common attributes and
 behaviors shared among all board games on GameToGo.
 - Define a constructor for the BoardGame class that initializes the dimensions of the game
@@ -13,9 +23,43 @@ class.
 - Implement a pure virtual method named isGameOver in the BoardGame class. This
 method should check whether the game is over due to a win, draw, or other game-specific
 conditions. Override this method in derived game classes to provide game-specific win
-and draw conditions*/
+and draw conditions.
+Part 2: Tic-Tac-Toe Game (20 points)
+- Create a class named TicTacToe that inherits from the BoardGame class. This class will
+represent our virtual Tic-Tac-Toe game.
+- Implement the print method in the TicTacToe class, which should render the Tic-Tac-Toe
+board with 'X' and 'O' marks.
+- Override the makeMove method in the TicTacToe class to allow players to make moves,
+alternating between 'X' and 'O'. Ensure that you handle move validation and win
+conditions.
+- Implement the game logic to check for a win or a draw. Override the isGameOver method
+in the TicTacToe class to determine the game's outcome.
+Part 3: Connect Four Game (20 points)
+- Create a class named ConnectFour that inherits from the BoardGame class. This class
+will represent our virtual Connect Four game.
+- Implement the print method in the ConnectFour class, which should render the Connect
+Four board with 'X' and 'O' marks.
+- Override the makeMove method in the ConnectFour class to allow players to make
+moves, following Connect Four's rules. Ensure that you handle move validation and win
+conditions.
+- Implement the game logic to check for a win or a draw. Override the isGameOver method
+in the ConnectFour class to determine the game's outcome.
+Part 4: Player Class (20 points)
+- Create a class named Player to represent a player in a board game. The Player class
+should have the following attributes:
+● A name to store the player's name (as a string).
+● A symbol to store the player's symbol (e.g., 'X' or 'O' or ‘Red’ or ‘Blue’).
+● Overload the << operator to allow printing a player's information using std::cout.
+When you use std::cout << player, it should print the player's name and symbol.
+● Integrate the Player class into the board class. Modify it to have instances of two
+Player objects, one for each player. Update the game logic to use these players
+and print the name of the player whose turn it is to make a move
+Part 5: Main Program (20 points)
+Create a main program that demonstrates the functionality of the two games.
+Bonus (15 points): Make the games look good using QT.*/
 
 #include<iostream>
+#include <fstream>
 using namespace std;
 
 // Player class
@@ -31,12 +75,29 @@ class Player
         
         Player operator << (Player &player);
 
-        string get_name(){return playerName;}
-        char get_symbol(){return playerSymbol;}
-
-
-
+        string get_name();
+        char get_symbol();
+        //void displayPlayer();
 };
+
+Player::Player(string name, char symbol) : playerName(name), playerSymbol(symbol)
+{};
+
+Player Player::operator<<(Player &player)
+{
+    ofstream playerInfo;
+    playerInfo << player.get_name() << endl;
+    playerInfo << player.get_symbol() << endl;
+    //return playerInfo;
+};
+
+string Player::get_name(){return playerName;};
+char Player::get_symbol(){return playerSymbol;};
+
+// void Player::displayPlayer()
+// {
+//     cout << "Player Name: " << get_name() << "\nPlayer Symbol: " << get_symbol() << endl;
+// };
 
 // BoardGame class
 class BoardGame 
@@ -45,7 +106,12 @@ class BoardGame
     int rows;
     int columns;
     char **play;
-    char currentPlayer = 'X';
+    //char currentPlayer = 'X';
+    char currentPlayersymbol;
+    Player *player1;
+    Player *player2;
+    Player *currentPlayer;
+    //int turns = 0;
 
     public:
     // BoardGame( int , int =0);
@@ -96,6 +162,8 @@ BoardGame::BoardGame(int r = 3, int c = 3): rows(r), columns(c)
             play[i][j] = '\0';
         }
     }
+    // player1->displayPlayer();
+    // player2->displayPlayer();
 };
 
 void BoardGame::printBoard()
@@ -113,7 +181,8 @@ void BoardGame::printBoard()
 
 void BoardGame::switchPlayer()
 {
-    currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
+    //currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
+    currentPlayer = (currentPlayer == player1) ? player2 : player1;
 };
 
 bool BoardGame::isMoveValid(int row, int column)
@@ -126,7 +195,8 @@ void BoardGame::makeMove(int row, int column)
 {
     if (isMoveValid(row, column))
     {
-        play[row][column] = currentPlayer;
+        play[row][column] = currentPlayer->get_symbol();
+        //turns++;
         switchPlayer();
     }
     else {cout << "Invalid move! Try again!" << endl;}
@@ -189,28 +259,15 @@ TicTacToe::TicTacToe() {};
 TicTacToe::TicTacToe(int r, int c) : BoardGame(r,c)
 {
     r = 3; c = 3;
+    player1 = new Player("Player 1", 'X');
+    player2 = new Player("Player 2", 'O');
+    currentPlayer = player1;
     //BoardGame(r,c);
-//    r =5;
-//    c = 6;
-//    c += r;
 };
 
 void TicTacToe::makeMove(int row, int column)
 {
     BoardGame::makeMove(row, column);
-    // if (isMoveValid(row, column))
-    // {
-    //     play[row][column] = currentPlayer;
-    //     switchPlayer();
-    // }
-    // else {cout << "Invalid move! Try again!" << endl;}
-    // for (int i=0; i<rows; i++)
-    // {
-    //     for (int j=0; j<columns; j++)
-    //     {
-            
-    //     }
-    // }
 };
 
 // void TicTacToe:: operator +(int move_r, int move_c)
@@ -367,6 +424,9 @@ class ConnectFour : public BoardGame
 ConnectFour::ConnectFour(int r, int c) : BoardGame(r,c)
 {
     r = 6; c = 7;
+    player1 = new Player("Player 1", 'X');
+    player2 = new Player("Player 2", 'O');
+    currentPlayer = player1;
 };
 
 bool ConnectFour::isRowEmpty()
@@ -397,7 +457,7 @@ void ConnectFour::makeMove(int column)
     // {
         if (isMoveValid(column))
         {
-            play[lastemptyrow][column] = currentPlayer;
+            play[lastemptyrow][column] = currentPlayer->get_symbol();
             switchPlayer();
             countcolumns++;
             if (countcolumns == 7)
@@ -576,7 +636,7 @@ void ConnectFour::isGameOver()
     else if (checkWin() == true)
     {
         switchPlayer();
-        cout << "Player " << currentPlayer << " WON! GAMEOVER!" << endl;
+        cout << "Player " << currentPlayer->get_symbol() << " WON! GAMEOVER!" << endl;
     }
 };
 
@@ -612,6 +672,7 @@ int main()
     connect4.makeMove(5);
     connect4.makeMove(6);
     connect4.makeMove(1);//
+    connect4.makeMove(6);
     connect4.makeMove(2);
     connect4.makeMove(3);
     connect4.makeMove(4);
@@ -625,6 +686,7 @@ int main()
     connect4.makeMove(0);
     connect4.makeMove(1);
     connect4.makeMove(4);
+    connect4.makeMove(2);
     connect4.makeMove(3);//
     connect4.makeMove(6);
     connect4.makeMove(1);
