@@ -431,19 +431,26 @@ ConnectFour::ConnectFour(int r, int c) : BoardGame(r,c)
 
 bool ConnectFour::isRowEmpty()
 {
+    //bool isEmpty;
     for (int i = lastemptyrow; i >= 0; i--)
     {
-    //i = lastemptyrow;
-    for (int j = 0; j <= columns - 7; j++)
-    {
-        if ((play[i][j] == '\0') && (play[i][j + 1] == '\0') && (play[i][j + 2] == '\0') && (play[i][j + 3] == '\0') && (play[i][j + 4] == '\0') && (play[i][j + 5] == '\0') && (play[i][j + 6] == '\0'))
-        {
-            return true;
-        }
-    }
+        //isEmpty = true;
+        //i = lastemptyrow;
+        // for (int j = 0; j <= columns - 7; j++)
+        // {
+            int j = 0;
+            if ((play[i][j] != '\0') && (play[i][j + 1] != '\0') && (play[i][j + 2] != '\0') && (play[i][j + 3] != '\0') && (play[i][j + 4] != '\0') && (play[i][j + 5] != '\0') && (play[i][j + 6] != '\0'))
+            {
+                //isEmpty = false;
+                return false;
+                //break;
+                //return true;
+            }
+            else {return true;}
+        //}
     //lastemptyrow--;
     }
-    lastemptyrow--;
+    //lastemptyrow--;
 };
 
 int ConnectFour::getEmptyRow()
@@ -460,7 +467,7 @@ void ConnectFour::makeMove(int column)
             play[lastemptyrow][column] = currentPlayer->get_symbol();
             switchPlayer();
             countcolumns++;
-            if (countcolumns == 7)
+            if ((isRowEmpty() == false))//(countcolumns == 7) && 
             {
                 countcolumns = 0;
                 lastemptyrow--;
@@ -493,7 +500,7 @@ bool ConnectFour::checkRows()
 {
     for (int i = 0; i < rows; i++)
     {
-        for (int j = 0; j <= columns - 4; j++)
+        for (int j = 0; j < columns - 3; j++)
         {
             if ((play[i][j] != '\0') && (play[i][j] == play[i][j + 1]) && (play[i][i] == play[i][j + 2]) && (play[i][j] == play[i][j + 3])) 
             {
@@ -543,7 +550,7 @@ bool ConnectFour::checkColumns()
 {
     for (int i = 0; i < columns; i++)
     {
-        for (int j = 0; j <= rows - 4; j++)
+        for (int j = 0; j < rows - 3; j++)
         {
             if ((play[j][i] != '\0') && (play[j][i] == play[j + 1][i]) && (play[j][i] == play[j + 2][i]) && (play[i][j] == play[j + 3][i])) 
             {
@@ -579,9 +586,9 @@ bool ConnectFour::checkColumns()
 bool ConnectFour::checkDiagonals()
 {
     //if the row and column index are the same 
-    for (int i = 0; i <= rows - 4; i++)
+    for (int i = 0; i < rows - 3; i++)
     {
-        for (int j = 0; j <= columns - 4; j--)
+        for (int j = 0; j < columns - 3; j--)
         {
             if ((play[i][j] != '\0') && (play[i][j] == play[i + 1][j + 1]) && (play[i][j] == play[i + 2][j + 2]) && (play[i][j] == play[i + 3][j + 3]))
             {
