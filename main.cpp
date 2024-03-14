@@ -85,7 +85,7 @@ Player::Player(string name, char symbol) : playerName(name), playerSymbol(symbol
 
 ostream &operator << (ostream &info, const Player &player)
 {
-    info << player.playerName << player.playerSymbol <<endl;
+    info << "Player: " << player.playerName << "\nSymbol: " << player.playerSymbol << endl;
     return info;
 };
 
@@ -109,7 +109,6 @@ class BoardGame
     Player *player1;
     Player *player2;
     Player *currentPlayer;
-    //int turns = 0;
 
     public:
     // BoardGame( int , int =0);
@@ -143,14 +142,6 @@ class BoardGame
 
 BoardGame::BoardGame(int r = 3, int c = 3): rows(r), columns(c)
 {
-    // play = new char[rows*columns];
-    // for (int i=0; i<<rows; i++)
-    // {
-    //     for (int j=0; j<columns; j++)
-    //     {play[i*j] = '\0';}
-    // }
-    /*OR:
-    in private of class: char** play;*/
     play = new char*[rows];
     for (int i = 0; i < rows; ++i) 
     {
@@ -194,17 +185,9 @@ void BoardGame::makeMove(int row, int column)
     if (isMoveValid(row, column))
     {
         play[row][column] = currentPlayer->get_symbol();
-        //turns++;
         switchPlayer();
     }
     else {cout << "Invalid move! Try again!" << endl;}
-    // for (int i=0; i<rows; i++)
-    // {
-    //     for (int j=0; j<columns; j++)
-    //     {
-            
-    //     }
-    // }
 };
 bool BoardGame::isBoardFull()
 {
@@ -245,8 +228,6 @@ class TicTacToe : public BoardGame
 
     bool checkWin();
 
-    //bool checkDraw();
-
     virtual void isGameOver();
 
     void print();
@@ -280,10 +261,7 @@ void TicTacToe::print()
 
 bool TicTacToe::checkRows()
 {
-    //int i = 0, j = 0;
-    //if ((play[0][0] != play[0][1]) || (play[0][0] != play[0][2])) {return false;}
-
-    //checks the first row if there are 3 consecutive same plays then checkrow is true
+     //checks the first row if there are 3 consecutive same plays then checkrow is true
     if ((play[0][0] == play[0][1]) && (play[0][0] == play[0][2])) 
     {
         playerwon = play [0][0];
@@ -303,16 +281,6 @@ bool TicTacToe::checkRows()
     }
     //otherwise if no match found within the rows then check row is false
     else {return false;}
-
-    // char first = play[0][0];
-
-    // for (int i = 0; i < rows; i++)
-    // {
-    //     for (int j = 0; j < columns; j++)
-    //     {
-    //         if () {return true;}
-    //     }
-    // }
 };
 
 bool TicTacToe::checkColumns()
@@ -333,9 +301,6 @@ bool TicTacToe::checkColumns()
         return true;
     }
     else {return false;}
-    // int **q; int rows, col;
-
-    // for (int i=0;)
 };
 
 bool TicTacToe::checkDiagonals()
@@ -360,25 +325,16 @@ bool TicTacToe::checkWin()
     else {return false;}
 };
 
-// bool TicTacToe::checkDraw()
-// {
-//     if (((currentPlayer == 'X') || (currentPlayer == 'O')) && (checkWin() == false))
-//     {return true;}
-//     else {return false;}
-// };
-
 void TicTacToe::isGameOver()
 {
     //bool gameover = false;s
     if ((checkWin() == false) || (BoardGame::isBoardFull() == true)) 
     {
         cout << "IT'S A DRAW! GAMEOVER!" << endl;
-        //gameover = true;
     }
     else if ( checkWin() == true)
     {
         cout << "Player " << playerwon << " WON! GAMEOVER!" << endl;
-        //gameover = false;
     }
 };
 
@@ -429,24 +385,14 @@ ConnectFour::ConnectFour(int r, int c) : BoardGame(r,c)
 
 bool ConnectFour::isRowEmpty()
 {
-    //bool isEmpty;
     for (int i = lastemptyrow; i >= 0; i--)
     {
-        //isEmpty = true;
-        //i = lastemptyrow;
-        // for (int j = 0; j <= columns - 7; j++)
-        // {
             int j = 0;
             if ((play[i][j] != '\0') && (play[i][j + 1] != '\0') && (play[i][j + 2] != '\0') && (play[i][j + 3] != '\0') && (play[i][j + 4] != '\0') && (play[i][j + 5] != '\0') && (play[i][j + 6] != '\0'))
             {
-                //isEmpty = false;
                 return false;
-                //break;
-                //return true;
             }
             else {return true;}
-        //}
-    //lastemptyrow--;
     }
     //lastemptyrow--;
 };
@@ -472,14 +418,6 @@ void ConnectFour::makeMove(int column)
             }
         }
         else {cout << "Invalid move! Try again!" << endl;}
-    //}
-    // }
-    // if (isMoveValid(column))
-    // {
-    //     play[row][column] = currentPlayer;
-    //     switchPlayer();
-    // }
-    // else {cout << "Invalid move! Try again!" << endl;}
 };
 
 bool ConnectFour::isMoveValid(int column)
@@ -509,39 +447,6 @@ bool ConnectFour::checkRows()
         }
     }
     return false;
-    //int i = 0, j = 0;
-    //if ((play[0][0] != play[0][1]) || (play[0][0] != play[0][2])) {return false;}
-
-    //checks the first row if there are 3 consecutive same plays then checkrow is true
-    // if ((play[0][0] == play[0][1]) && (play[0][0] == play[0][2])) 
-    // {
-    //     currentPlayer = play [0][0];
-    //     return true;
-    // }
-    // //checks the second row if there are 3 consecutive same plays then checkrow is true
-    // else if ((play[1][0] == play[1][1]) && (play[1][0] == play[1][2])) 
-    // {
-    //     currentPlayer = play [1][0];
-    //     return true;
-    // }
-    // //checks the third row if there are 3 consecutive same plays then checkrow is true
-    // else if ((play[2][0] == play[2][1]) && (play[2][0] == play[2][2])) 
-    // {
-    //     currentPlayer = play [2][0];
-    //     return true;
-    // }
-    // //otherwise if no match found within the rows then check row is false
-    // else {return false;}
-
-    // char first = play[0][0];
-
-    // for (int i = 0; i < rows; i++)
-    // {
-    //     for (int j = 0; j < columns; j++)
-    //     {
-    //         if () {return true;}
-    //     }
-    // }
 };
 
 bool ConnectFour::checkColumns()
@@ -559,26 +464,6 @@ bool ConnectFour::checkColumns()
         }
     }
     return false;
-    // if ((play[0][0] == play[1][0]) && (play[0][0] == play[2][0])) 
-    // {
-    //     currentPlayer = play [0][0];
-    //     return true;
-    // }
-    // else if ((play[0][1] == play[1][1]) && (play[0][1] == play[2][1])) 
-    // {
-    //     currentPlayer = play [0][1];
-    //     return true;
-    // }
-    // else if ((play[2][0] == play[2][1]) && (play[2][0] == play[2][2])) 
-    // {
-    //     currentPlayer = play [2][0];
-    //     return true;
-    // }
-    // else {return false;}
-
-    // int **q; int rows, col;
-
-    // for (int i=0;)
 };
 
 bool ConnectFour::checkDiagonals()
@@ -591,38 +476,19 @@ bool ConnectFour::checkDiagonals()
             if ((play[i][j] != '\0') && (play[i][j] == play[i + 1][j + 1]) && (play[i][j] == play[i + 2][j + 2]) && (play[i][j] == play[i + 3][j + 3]))
             {
                 playerwon = play[i][j];
-                //cout << "Right diag" << i << " " << j << " " << playerwon << endl;
+                //cout << "left diag" << i << " " << j << " " << playerwon << endl;
                 return true;
             }
             else if ((play[i][j + 3] != '\0') && (play[i][j + 3] == play[i + 1][j + 2]) && (play[i][j + 3] == play[i + 2][j + 1]) && (play[i][j + 3] == play[i + 3][j])) 
             {
                 playerwon = play[i][j + 3];
-                //cout << "left diag" << i << " " << j + 3 << " " << playerwon << endl;
+                //cout << "right diag" << i << " " << j + 3 << " " << playerwon << endl;
                 return true;
             }
             //else {return false;}
         }
     }
     return false;
-    // for (int i = 0; i <= rows - 4; i++)
-    // {
-    //     for (int j = columns - 1; j < 0; j--)
-    //     {
-    //         if ((play[i][j] != '\0') && (play[i][j] == play[i + 1][j -1]) && (play[i][j] == play[i + 2][j - 2]) && (play[i][j] == play[i + 3][j - 3])){}
-    //     }
-    // }
-
-    // if ((play[0][0] == play[1][1]) && (play[0][0] == play[2][2])) 
-    // {
-    //     currentPlayer = play [0][0];
-    //     return true;
-    // }
-    // else if ((play[0][2] == play[1][1]) && (play[1][1] == play[2][0])) 
-    // {
-    //     currentPlayer = play [0][2];
-    //     return true;
-    // }
-    // else {return false;}
 };
 
 bool ConnectFour::checkWin()
@@ -664,7 +530,7 @@ int main()
     cout << "\n------------------------------------------------------------------------\n" << endl;
 
     ConnectFour connect4(6,7);
-    Player player1("khouly", 'X');
+    Player player1("Khouly", 'X');
     cout << player1;
     // connect4.makeMove(0);
     // connect4.makeMove(6);
@@ -706,6 +572,7 @@ int main()
 
     connect4.print();
     connect4.isGameOver();
+    cout << "\n------------------------------------------------------------------------\n" << endl;
 
     return 0;
 }
