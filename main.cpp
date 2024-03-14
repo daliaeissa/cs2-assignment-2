@@ -238,8 +238,8 @@ TicTacToe::TicTacToe() {};
 TicTacToe::TicTacToe(int r, int c) : BoardGame(r,c)
 {
     r = 3; c = 3;
-    player1 = new Player("Player 1", 'X');
-    player2 = new Player("Player 2", 'O');
+    player1 = new Player("Nour", 'X');
+    player2 = new Player("Zee", 'O');
     currentPlayer = player1;
     //BoardGame(r,c);
 };
@@ -256,6 +256,7 @@ void TicTacToe::makeMove(int row, int column)
 
 void TicTacToe::print()
 {
+    cout << "TicTacToe Game: \n" << endl;
     BoardGame::printBoard();
 };
 
@@ -320,21 +321,31 @@ bool TicTacToe::checkDiagonals()
 
 bool TicTacToe::checkWin()
 {
-    //char wonplayer;
     if ((checkRows() == true) || (checkColumns() == true) || (checkDiagonals() == true)) {return true;}
     else {return false;}
 };
 
 void TicTacToe::isGameOver()
 {
-    //bool gameover = false;s
-    if ((checkWin() == false) || (BoardGame::isBoardFull() == true)) 
+    if ((checkWin() == false) && (BoardGame::isBoardFull() == false))
+    {
+        cout << "Game not over! Continue playing!" << endl;
+    }
+    else if ((checkWin() == false) && (BoardGame::isBoardFull() == true)) 
     {
         cout << "IT'S A DRAW! GAMEOVER!" << endl;
     }
-    else if ( checkWin() == true)
+    else if (checkWin() == true)
     {
-        cout << "Player " << playerwon << " WON! GAMEOVER!" << endl;
+        //cout << "Player " << playerwon << " WON! GAMEOVER!" << endl;
+        if (playerwon == player1->get_symbol())
+        {
+            cout << *player1 << "WON! GAMEOVER!" << endl;
+        }
+        else if (playerwon == player2->get_symbol())
+        {
+            cout << *player2 << "WON! GAMEOVER!" << endl;
+        }
     }
 };
 
@@ -346,6 +357,7 @@ class ConnectFour : public BoardGame
     int lastemptyrow = rows - 1;
     int i = 0;
     int countcolumns = 0;
+    int countplays = 0;
 
     public:
     ConnectFour();
@@ -367,6 +379,8 @@ class ConnectFour : public BoardGame
 
     bool checkWin();
 
+    bool isBoardFull();
+
     void isGameOver() override;
 
     void print();
@@ -378,8 +392,8 @@ class ConnectFour : public BoardGame
 ConnectFour::ConnectFour(int r, int c) : BoardGame(r,c)
 {
     r = 6; c = 7;
-    player1 = new Player("Player 1", 'X');
-    player2 = new Player("Player 2", 'O');
+    player1 = new Player("Nour", 'X');
+    player2 = new Player("Zee", 'O');
     currentPlayer = player1;
 };
 
@@ -429,6 +443,7 @@ bool ConnectFour::isMoveValid(int column)
 
 void ConnectFour::print()
 {
+    cout << "ConnectFour Game: \n" << endl;
     BoardGame::printBoard();
 };
 
@@ -498,18 +513,43 @@ bool ConnectFour::checkWin()
     else {return false;}
 };
 
+bool ConnectFour::isBoardFull()
+{
+    //int countplays = 0;
+    for (int i = 0; i < rows; i++)
+    {
+        for (int j = 0; j < columns; j++)
+        {
+            if (play[i][j] != '\0')
+            {
+                countplays++;
+            }
+        }
+    }
+    if (countplays == 6*7) {return true;}
+    else {return false;}
+};
+
 void ConnectFour::isGameOver()
 {
-     if ((checkWin() == false) || (BoardGame::isBoardFull() == true)) 
+     if ((checkWin() == false) && (isBoardFull() == true)) 
     {
         cout << "IT'S A DRAW! GAMEOVER!" << endl;
     }
-    else if ((checkWin() == false) && (BoardGame::isBoardFull() == false))
+    else if ((checkWin() == false) && (isBoardFull() == false))
     {cout << "The game is not over yet! Continue playing!" << endl;}
     else if (checkWin() == true)
     {
         switchPlayer();
-        cout << "Player " << currentPlayer->get_symbol() << " WON! GAMEOVER!" << endl;
+        //cout << "Player " << currentPlayer->get_symbol() << " WON! GAMEOVER!" << endl;
+        if (playerwon == player1->get_symbol())
+        {
+            cout << *player1 << "WON! GAMEOVER!" << endl;
+        }
+        else if (playerwon == player2->get_symbol())
+        {
+            cout << *player2 << "WON! GAMEOVER!" << endl;
+        }
     }
 };
 
@@ -530,8 +570,8 @@ int main()
     cout << "\n------------------------------------------------------------------------\n" << endl;
 
     ConnectFour connect4(6,7);
-    Player player1("Khouly", 'X');
-    cout << player1;
+    // Player player1("Khouly", 'X');
+    // cout << player1;
     // connect4.makeMove(0);
     // connect4.makeMove(6);
     // connect4.makeMove(1);
